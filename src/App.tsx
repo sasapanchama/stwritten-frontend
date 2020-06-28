@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { AuthProvider } from "./providers/Auth";
+import PageHome from "./components/pages/PageHome";
+import PageMemos from "./components/pages/PageMemos";
+import PageMemo from "./components/pages/PageMemos/PageMemo";
+import PageNotfound from "./components/pages/PageNotfound";
+import PageSettings from "./components/pages/PageSettings";
+import PageSignin from "./components/pages/PageSignin";
+import PageSignup from "./components/pages/PageSignup";
 
-function App() {
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={PageHome} />
+          <Route path="/memos/:memoId" component={PageMemo} />
+          <Route path="/memos" component={PageMemos} />
+          <Route path="/settings" component={PageSettings} />
+          <Route path="/signin" component={PageSignin} />
+          <Route path="/signup" component={PageSignup} />
+          <Route path="*" component={PageNotfound} />
+        </Switch>
+      </BrowserRouter>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
